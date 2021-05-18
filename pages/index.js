@@ -21,7 +21,7 @@ export default function HomePage({ events }) {
   );
 }
 export async function getServerSideProps() {
-  const res = await fetch(`http://localhost:3000/api/events`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events`);
   const events = await res.json();
 
   return {

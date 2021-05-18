@@ -4,7 +4,7 @@ export default async (req, res) => {
   if (req.method === "POST") {
     const { username, email, password } = req.body;
 
-    const strapiRes = await fetch(`http://localhost:3000/api/auth/local/register`, {
+    const strapiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/local/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -20,11 +20,11 @@ export default function EventsPage({ events, total, page }) {
 export async function getServerSideProps({ query: { page = 1 } }) {
   const start = +page === 1 ? 0 : (+page - 1) * PER_PAGE;
 
-  const totalRes = await fetch(`http://localhost:3000/api/events/count`);
+  const totalRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/count`);
   const total = await totalRes.json();
 
   const eventRes = await fetch(
-    `http://localhost:3000/api/events`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/events`
   );
   const events = await eventRes.json();
 

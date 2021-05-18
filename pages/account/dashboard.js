@@ -9,7 +9,7 @@ export default function DashboardPage({ events, token }) {
 
   const deleteEvent = async (id) => {
     if (confirm("Are you sure?")) {
-      const res = await fetch(`http://localhost:3000/api/events/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ export default function DashboardPage({ events, token }) {
 export async function getServerSideProps({ req }) {
   const { token } = parseCookies(req);
 
-  const res = await fetch(`http://localhost:3000/api/events/me`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/me`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

@@ -31,7 +31,7 @@ export async function getServerSideProps({ query: { term } }) {
     },
   });
 
-  const res = await fetch(`http://localhost:3000/api/events?${query}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events?${query}`);
   const events = await res.json();
 
   return {

@@ -13,7 +13,7 @@ export default function EventPage({ evt }) {
 
   const deleteEvent = async (e) => {
     if (confirm("Are you sure?")) {
-      const res = await fetch(`http://localhost:3000/api/events/${evt._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${evt._id}`, {
         method: "DELETE",
       });
 
@@ -68,7 +68,7 @@ export default function EventPage({ evt }) {
 }
 
 export async function getServerSideProps({ query: { id } }) {
-  const res = await fetch(`http://localhost:3000/api/events/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`);
   const evt = await res.json();
 
   return {

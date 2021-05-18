@@ -8,7 +8,7 @@ export default async (req, res) => {
 
     const { token } = cookie.parse(req.headers.cookie);
 
-    const strapiRes = await fetch(`http://localhost:3000/api/users/me`, {
+    const strapiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

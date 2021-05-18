@@ -40,7 +40,7 @@ export default function EditEventPage({ evt }) {
       toast.error("Please fill in all fields.");
     }
 
-    const res = await fetch(`http://localhost:3000/api/events/${evt._id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${evt._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export default function EditEventPage({ evt }) {
   };
 
   const imageUploaded = async (e) => {
-    const res = await fetch(`http://localhost:3000/api/events/${evt.id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${evt.id}`);
     const data = await res.json();
     setImagePreview(data.image.formats.thumbnail.url);
     setShowModal(false);
@@ -182,7 +182,7 @@ export default function EditEventPage({ evt }) {
 export async function getServerSideProps({ params: { id }, req }) {
   // const { token } = parseCookies(req);
 
-  const res = await fetch(`http://localhost:3000/api/events/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`);
   const evt = await res.json();
 
   return {
