@@ -51,12 +51,12 @@ export default function Header() {
             </>
           ) : (
             <li>
-              {/* <Link href="/account/login">
+              <Link href="/account/login">
                 <a className="btn-secondary btn-icon">
                   <FaSignInAlt />
                   Login
                 </a>
-              </Link> */}
+              </Link>
             </li>
           )}
         </ul>

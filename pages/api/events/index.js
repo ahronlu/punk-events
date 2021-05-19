@@ -19,7 +19,6 @@ const handler = async (req, res) => {
                         name, description, venue, address, performers, time, date
                     });
 
-                    console.log('data complete')
                     const eventcreated = await event.save();
                     return res.status(200).json(eventcreated);
                 } catch (error) {
@@ -29,7 +28,8 @@ const handler = async (req, res) => {
                 return res.status(422).send({ message: "data incomplete" });
             }
         default: {
-                return res.status(405).json({ message : "req method not supported" });
+                re.setHeader("Allow", ["POST", "GET"]);
+                res.status(405).json({ message: `Method ${req.method} not allowed` });
             }
     };
 }

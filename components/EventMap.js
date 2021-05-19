@@ -21,6 +21,7 @@ export default function EventMap({ evt }) {
     Geocode.fromAddress(evt.address).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat,lng)
         setLat(lat);
         setLng(lng);
         setViewport({ ...viewport, latitude: lat, longitude: lng });

@@ -25,7 +25,8 @@ export const AuthProvider = ({ children }) => {
     const data = await res.json();
 
     if (res.ok) {
-      setUser(data.user);
+      setUser(data);
+      console.log(data)
       router.push("/account/dashboard");
     } else {
       setError(data.message);
@@ -34,14 +35,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Login user
-  const login = async ({ email: identifier, password }) => {
+  const login = async ({ email, password }) => {
     const res = await fetch(`${NEXT_URL}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        identifier,
+        email,
         password,
       }),
     });
@@ -49,7 +50,8 @@ export const AuthProvider = ({ children }) => {
     const data = await res.json();
 
     if (res.ok) {
-      setUser(data.user);
+      setUser(data);
+      console.log(data)
       router.push("/account/dashboard");
     } else {
       setError(data.message);
