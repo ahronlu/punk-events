@@ -6,11 +6,11 @@ export default function DashboardEvent({ evt, handleDelete }) {
   return (
     <div className={styles.event}>
       <h4>
-        <Link href={`/events/${evt.slug}`}>
+        <Link href={`/events/${evt._id}`}>
           <a>{evt.name}</a>
         </Link>
       </h4>
-      <Link href={`/events/edit/${evt.id}`}>
+      <Link href={`/events/edit/${evt._id}`}>
         <a className={styles.edit}>
           <FaPencilAlt /> <span>Edit Event</span>
         </a>
@@ -18,7 +18,7 @@ export default function DashboardEvent({ evt, handleDelete }) {
       <a
         href="#"
         className={styles.delete}
-        onClick={() => handleDelete(evt.id)}
+        onClick={() => handleDelete(evt._id)}
       >
         <FaTimes /> <span>Delete</span>
       </a>
