@@ -8,7 +8,7 @@ connectDB();
 
 export default async (req, res) => {
   if (req.method === "GET") {
-    // auth(req, res)
+    console.log(req.method)
     if (!req.headers.cookie) return res.status(403).json({ message: "Not Authorized" });
 
     const { token } = cookie.parse(req.headers.cookie);
@@ -26,12 +26,14 @@ export default async (req, res) => {
         if(!user) res.status(403).json({ message: "User forbidden" });
         req.user = user;
         res.status(200).json({ user });
+        console.log(user)
+        return user;
     } catch (err) {
       console.error("something wrong with auth middleware",err);
       res.status(500).json({ msg: 'Server Error' });
     }
   } else {
-    re.setHeader("Allow", ["GET"]);
+    res.setHeader("Allow", ["GET"]);
     res.status(405).json({ message: `Method ${req.method} not allowed` });
   }
 };

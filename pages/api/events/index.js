@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import auth from "middleware/auth";
 import connectDB from "../../../middleware/mongodb";
 import Event from "../../../models/Event";
+import user from "../user";
 
 connectDB();
 
@@ -15,7 +16,8 @@ export default async (req, res) => {
                 return res.status(500).json({ message: "Server Error"});
             }
         case "POST":
-            auth(req,res)
+            const _id = user(req,res)
+            return console.log(_id)
             const { name, description, venue, address, performers, time, date } = req.body;
             if (name && description && venue && address && performers && time && date) {
                 try {
@@ -32,7 +34,7 @@ export default async (req, res) => {
                 return res.status(422).send({ message: "data incomplete" });
             }
         default: {
-                re.setHeader("Allow", ["POST", "GET"]);
+                res.setHeader("Allow", ["POST", "GET"]);
                 res.status(405).json({ message: `Method ${req.method} not allowed` });
             }
     };
