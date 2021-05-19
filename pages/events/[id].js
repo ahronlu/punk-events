@@ -15,6 +15,7 @@ export default function EventPage({ evt }) {
     if (confirm("Are you sure?")) {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${evt._id}`, {
         method: "DELETE",
+        Authorization: `Bearer ${token}`,
       });
 
       const data = await res.json();

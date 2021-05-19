@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import connectDB from "../../../middleware/mongodb";
 import Event from "../../../models/Event";
 
@@ -7,9 +8,13 @@ export default async (req, res) => {
     switch (req.method) {
         case "GET":
             try {
-                const event = await Event.findById(req.query.id);
-                if(!event) return res.status(400).json({ message: "Event not found" });
-                return res.status(200).json(event);
+                const { userId }  = (jwt.verify(
+                    req.headers.authorization.split(' ')[1],
+                    process.env.JWT_SECRET
+                  ));
+                const events = await Event.find({ userId });
+                if(!events) return res.status(400).json({ message: "Event not found" });
+                return res.status(200).json(events);
             } catch (error) {
                 res.status(500).json({ message: "Server Error" });
             }

@@ -1,29 +1,33 @@
 import jwt from "jsonwebtoken"; 
 import cookie from "cookie";
+import auth from "middleware/auth";
+import User from "models/User";
+import connectDB from "middleware/mongodb";
 
+connectDB();
 
 export default async (req, res) => {
   if (req.method === "GET") {
+    // auth(req, res)
     if (!req.headers.cookie) return res.status(403).json({ message: "Not Authorized" });
 
     const { token } = cookie.parse(req.headers.cookie);
 
-    console.log(token)
 
-    if (!token) return res.status(401).json({ msg: 'No token, authorization denied' });
+    if (!token) return res.status(401).json({ msg: "No token, authorization denied" });
 
+      const { userId }  = (jwt.verify(
+        token,
+        process.env.JWT_SECRET
+    ));
     // Verify token
     try {
-      jwt.verify(token, process.env.jwtSecret, (error, decoded) => {
-        if (error) {
-          return res.status(401).json({ msg: 'Token is not valid' });
-        } else {
-          req.user = decoded.user;
-          next();
-        }
-      });
+        const user = await User.findById(userId).select("-password");
+        if(!user) res.status(403).json({ message: "User forbidden" });
+        req.user = user;
+        res.status(200).json({ user });
     } catch (err) {
-      console.error('something wrong with auth middleware');
+      console.error("something wrong with auth middleware",err);
       res.status(500).json({ msg: 'Server Error' });
     }
   } else {

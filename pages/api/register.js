@@ -4,7 +4,9 @@ import cookie from "cookie";
 import User from "../../models/User";
 import connectDB from "../../middleware/mongodb";
 
-const handler = async (req, res) => {
+connectDB();
+
+export default async (req, res) => {
   if (req.method === "POST") {
     const { username, email, password } = req.body;
 
@@ -50,5 +52,3 @@ const handler = async (req, res) => {
     res.status(405).json({ message: `Method ${req.method} not allowed` });
   }
 };
-
-export default connectDB(handler);

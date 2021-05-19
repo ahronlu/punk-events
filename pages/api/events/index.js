@@ -1,7 +1,11 @@
+import jwt from "jsonwebtoken";
+import auth from "middleware/auth";
 import connectDB from "../../../middleware/mongodb";
 import Event from "../../../models/Event";
 
-const handler = async (req, res) => {
+connectDB();
+
+export default async (req, res) => {
     switch (req.method) {
         case "GET":
             try {
@@ -11,7 +15,7 @@ const handler = async (req, res) => {
                 return res.status(500).json({ message: "Server Error"});
             }
         case "POST":
-            console.log(req.body)
+            auth(req,res)
             const { name, description, venue, address, performers, time, date } = req.body;
             if (name && description && venue && address && performers && time && date) {
                 try {
@@ -33,5 +37,3 @@ const handler = async (req, res) => {
             }
     };
 }
-
-export default connectDB(handler);

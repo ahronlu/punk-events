@@ -32,7 +32,7 @@ export default function DashboardPage({ events, token }) {
         <h1>Dashboard</h1>
         <h3>My Events</h3>
 
-        {events.map((evt) => (
+        {events.length && events.map((evt) => (
           <DashboardEvent key={evt._id} evt={evt} handleDelete={deleteEvent} />
         ))}
       </div>
@@ -43,7 +43,7 @@ export default function DashboardPage({ events, token }) {
 export async function getServerSideProps({ req }) {
   const { token } = parseCookies(req);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/me`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

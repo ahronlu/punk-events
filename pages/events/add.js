@@ -7,7 +7,7 @@ import Link from "next/link";
 import Layout from "@/components/Layout";
 import styles from "@/styles/Form.module.css";
 
-export default function AddEventPage({ /*token*/ }) {
+export default function AddEventPage({ token }) {
   const [values, setValues] = useState({
     name: "",
     performers: "",
@@ -23,8 +23,6 @@ export default function AddEventPage({ /*token*/ }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(values)
-
     const hasEmptyFields = Object.values(values).some(
       (element) => element === ""
     );
@@ -39,7 +37,7 @@ export default function AddEventPage({ /*token*/ }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
@@ -145,10 +143,11 @@ export default function AddEventPage({ /*token*/ }) {
   );
 }
 
-// export async function getServerSideProps({ req }) {
-//   const { token } = parseCookies(req);
+export async function getServerSideProps({ req }) {
+  const { token } = parseCookies(req);
+  // console.log(token)
 
-//   return {
-//     props: { token },
-//   };
-// }
+  return {
+    props: { token },
+  };
+}

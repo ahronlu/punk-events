@@ -12,7 +12,7 @@ import ImageUpload from "@/components/ImageUpload";
 import { parseCookies } from "@/helpers/index";
 import styles from "@/styles/Form.module.css";
 
-export default function EditEventPage({ evt }) {
+export default function EditEventPage({ evt, token }) {
   const [values, setValues] = useState({
     name: evt.name,
     performers: evt.performers,
@@ -44,7 +44,7 @@ export default function EditEventPage({ evt }) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
@@ -172,7 +172,7 @@ export default function EditEventPage({ evt }) {
         <ImageUpload
           evtId={evt.id}
           imageUploaded={imageUploaded}
-          // token={token}
+          token={token}
         />
       </Modal>
     </Layout>
@@ -180,7 +180,7 @@ export default function EditEventPage({ evt }) {
 }
 
 export async function getServerSideProps({ params: { id }, req }) {
-  // const { token } = parseCookies(req);
+  const { token } = parseCookies(req);
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`);
   const evt = await res.json();
@@ -188,7 +188,7 @@ export async function getServerSideProps({ params: { id }, req }) {
   return {
     props: {
       evt,
-      // token,
+      token,
     },
   };
 }

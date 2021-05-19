@@ -10,7 +10,7 @@ export default function EventsPage({ events, total, page }) {
       {events.length === 0 && <h3>No events to show</h3>}
 
       {events.map((evt) => (
-        <EventItem key={evt.id} evt={evt} />
+        <EventItem key={evt._id} evt={evt} />
       ))}
 
       <Pagination total={total} page={page} />
