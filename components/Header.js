@@ -25,11 +25,6 @@ export default function Header() {
               <a>Events</a>
             </Link>
           </li>
-          <li>
-              <Link href="/events/add">
-                <a>Add Show</a>
-              </Link>
-            </li>
           {user ? (
             <>
               <li>
