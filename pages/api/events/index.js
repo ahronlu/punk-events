@@ -16,13 +16,14 @@ export default async (req, res) => {
                 return res.status(500).json({ message: "Server Error"});
             }
         case "POST":
-            const _id = user(req,res)
-            return console.log(_id)
+            const user = await auth(req, res);
+
             const { name, description, venue, address, performers, time, date } = req.body;
+
             if (name && description && venue && address && performers && time && date) {
                 try {
                     var event = new Event({
-                        name, description, venue, address, performers, time, date
+                        name, description, venue, address, performers, time, date, userId: user._id
                     });
 
                     const eventcreated = await event.save();

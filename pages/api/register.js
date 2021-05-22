@@ -4,7 +4,7 @@ import cookie from "cookie";
 import User from "../../models/User";
 import connectDB from "../../middleware/mongodb";
 
-connectDB();
+connectDB(handler);
 
 export default async (req, res) => {
   if (req.method === "POST") {

@@ -1,24 +1,17 @@
 import jwt from "jsonwebtoken";
 import User from "models/User";
-import connectDB from "./mongodb";
+import { parseCookies } from "../helpers";
 
-connectDB();
+export default async (req, res) => {
+    const { token } = parseCookies(req);
 
-export default async (req, res, next) => {
-    console.log(req.headers)
-    // const { userId }  = (jwt.verify(
-    //     req.headers.authorization.split(' ')[1],
-    //     process.env.JWT_SECRET
-    // ));
-    try {
-        // const user = await User.findById(userId)
-        // console.log(user)
+    if(!token) return res.status(400).json({err: 'Invalid Authentication.'})
 
-        // if(!user) return res.status(403).json({ message: "User not found "})
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET)
 
-        // req.user = user;
-        next()
-    } catch (error) {
-        res.status(500).json({ message: "Server error" })
-    }
+    if(!userId) return res.status(400).json({err: 'Invalid Authentication.'})
+
+    const user = await User.findById(userId).select("-password");
+
+    return user;
 }

@@ -8,22 +8,23 @@ connectDB();
 
 export default async (req, res) => {
   if (req.method === "GET") {
-    console.log(req.method)
-    if (!req.headers.cookie) return res.status(403).json({ message: "Not Authorized" });
+    // console.log(req.method)
+    // if (!req.headers.cookie) return res.status(403).json({ message: "Not Authorized" });
 
-    const { token } = cookie.parse(req.headers.cookie);
+    // const { token } = cookie.parse(req.headers.cookie);
 
 
-    if (!token) return res.status(401).json({ msg: "No token, authorization denied" });
+    // if (!token) return res.status(401).json({ msg: "No token, authorization denied" });
 
-      const { userId }  = (jwt.verify(
-        token,
-        process.env.JWT_SECRET
-    ));
+    //   const { userId }  = (jwt.verify(
+    //     token,
+    //     process.env.JWT_SECRET
+    // ));
     // Verify token
     try {
-        const user = await User.findById(userId).select("-password");
-        if(!user) res.status(403).json({ message: "User forbidden" });
+        // const user = await User.findById(userId).select("-password");
+        // if(!user) res.status(403).json({ message: "User forbidden" });
+        const user = await auth(req, res);
         req.user = user;
         res.status(200).json({ user });
         console.log(user)
