@@ -40,15 +40,11 @@ export default async (req, res) => {
       );
 
       res.status(201).json(user);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
       res.status(500).json({ message: "Server Error" });
     }
-
-
-
   } else {
-    re.setHeader("Allow", ["POST"]);
+    res.setHeader("Allow", ["POST"]);
     res.status(405).json({ message: `Method ${req.method} not allowed` });
   }
 };

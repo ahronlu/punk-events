@@ -1,8 +1,6 @@
-import jwt from "jsonwebtoken";
-import auth from "middleware/auth";
 import connectDB from "../../../middleware/mongodb";
 import Event from "../../../models/Event";
-import user from "../user";
+import auth from "middleware/auth";
 
 connectDB();
 
@@ -11,8 +9,9 @@ export default async (req, res) => {
         case "GET":
             try {
                 const events = await Event.find();
+
                 return res.status(200).json(events);
-            } catch (error) {
+            } catch (err) {
                 return res.status(500).json({ message: "Server Error"});
             }
         case "POST":
@@ -27,9 +26,10 @@ export default async (req, res) => {
                     });
 
                     const eventcreated = await event.save();
+                    
                     return res.status(200).json(eventcreated);
-                } catch (error) {
-                    return res.status(500).json({ message: error.message });
+                } catch (err) {
+                    return res.status(500).json({ message: "Server Error" });
                 }
             } else {
                 return res.status(422).send({ message: "data incomplete" });

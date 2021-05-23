@@ -7,8 +7,9 @@ import Image from "next/image";
 import Layout from "@/components/Layout";
 import EventMap from "@/components/EventMap";
 import styles from "@/styles/Event.module.css";
+import { parseCookies } from "@/helpers/index";
 
-export default function EventPage({ evt }) {
+export default function EventPage({ evt, token }) {
   const router = useRouter();
 
   const deleteEvent = async (e) => {
@@ -68,13 +69,17 @@ export default function EventPage({ evt }) {
   );
 }
 
-export async function getServerSideProps({ query: { id } }) {
+export async function getServerSideProps({ query: { id }, req }) {
+  const { token } = parseCookies(req);
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`);
+
   const evt = await res.json();
 
   return {
     props: {
       evt,
+      token
     },
   };
 }

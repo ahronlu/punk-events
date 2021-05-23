@@ -41,12 +41,11 @@ export default async (req, res) => {
       } else {
         res.status(401).json({ message: "Passwords do not match" });
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
       res.status(500).json({ message: "Server Error" });
     }
   } else {
-    re.setHeader("Allow", ["POST"]);
+    res.setHeader("Allow", ["POST"]);
     res.status(405).json({ message: `Method ${req.method} not allowed` });
   }
 };
